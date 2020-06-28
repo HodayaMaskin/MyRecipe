@@ -12,3 +12,4 @@ mydict = {}#{ "name": "John", "address": "Highway 37" }
 x = mycol.insert_one(mydict)
 y = mycol.find_one()
 print("hello world - commit 2")
+print("hello world - commit 3")
