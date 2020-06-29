@@ -1,5 +1,6 @@
 __author__ = 'mmalca'
 
+
 def init_server():
     PORT = 80
     #IP =
@@ -7,5 +8,3 @@ def init_server():
     server = HTTPServer(('10.10.248.98', PORT), http_handler)
     print('Server is running on port %s'%PORT)
     server.serve_forever()
-
-init_server()
