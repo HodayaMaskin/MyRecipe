@@ -1,4 +1,6 @@
 __author__ = 'mmalca'
+import json
+
 
 def get_ingredients_list(self):
     self.send_response(200)
