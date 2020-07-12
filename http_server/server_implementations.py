@@ -4,9 +4,10 @@ import json
 
 def get_ingredients_list(self):
     self.send_response(200)
-    #self.send_header('Content-Type', 'application/json')
-    #self.end_headers()
-    json_string = json.dumps({
+    self.send_header('Access-Control-Allow-Origin', '*')
+    self.send_header('Content-Type', 'application/json')
+    self.end_headers()
+    db_response = {
             "ingredients": [
             {
                         "name": "עגבניה",
@@ -17,5 +18,7 @@ def get_ingredients_list(self):
                             "measurementUnit": "מל"
                     }
             ]
-    })
-    self.wfile.write(json_string)
+    }
+    # json_string = json.dumps()
+    self.wfile.write(json.dumps(db_response).encode('utf-8')) #on client side need to decode: json_from_server.decode('utf_8')
+    print("sent json")
