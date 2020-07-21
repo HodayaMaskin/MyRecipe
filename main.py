@@ -16,6 +16,5 @@ from db.AddIngredientsScript import *
 #first_try()
 #Connect to the DB
 #myclient = pymongo.MongoClient("mongodb://193.106.55.98:5000/")
-
-add_ingredients()
+GetIngredients()
 #init_server()
