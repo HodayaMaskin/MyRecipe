@@ -11,6 +11,7 @@ def get_ingredients_list(self):
     self.send_header('Content-Type', 'application/json')
     self.end_headers()
 
+    #on DB need to add "similar_ing": [1, 2, 3, 4]
     db_response = {
             "ingredients": [
                 {
@@ -50,9 +51,11 @@ def get_recipe(self):
     self.send_header('Content-Type', 'application/json')
     self.end_headers()
 
+    #no "score" parameter on DB
     recipe = {
          "recipe_name": "Cake",
          "picture_url": "C:\pictures\1.jpg",
+         "score": 95,
          "ingredients": [
                 {
                     "_id": 1,
