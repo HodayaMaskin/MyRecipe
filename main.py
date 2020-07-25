@@ -1,6 +1,6 @@
 import pymongo
-from http_server.server_init import init_server
-from http_server.JsonOperations import *
+#from http_server.server_init import init_server
+#from http_server.JsonOperations import *
 from FastTextOperations.first_impression import *
 from db.AddIngredientsScript import *
 
@@ -13,8 +13,8 @@ from db.AddIngredientsScript import *
 #print(m)
 # end of json tests
 
-#first_try()
+first_try()
 #Connect to the DB
 #myclient = pymongo.MongoClient("mongodb://193.106.55.98:5000/")
-GetIngredients()
+#GetIngredients()
 #init_server()
