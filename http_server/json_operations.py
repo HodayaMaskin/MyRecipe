@@ -16,6 +16,6 @@ class Recipe:
         self.name = name
         self.processor = id
 
-    def ObjectToJson(self):
+    def object_to_json(self):
         str = json.dumps(self.__dict__)
         return str

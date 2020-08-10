@@ -1,8 +1,9 @@
 __author__ = 'mmalca'
+
 import json
-#from urlparse import urlparse
-#from urlparse import urlparse, parse_qs
-from urllib.parse import urlparse,parse_qs
+##from urlparse import urlparse
+##from urlparse import urlparse, parse_qs
+from urllib.parse import urlparse, parse_qs
 
 
 def get_ingredients_list(self):

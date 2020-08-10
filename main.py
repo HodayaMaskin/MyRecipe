@@ -1,8 +1,8 @@
-import pymongo
-#from http_server.server_init import init_server
-#from http_server.JsonOperations import *
-from FastTextOperations.first_impression import *
-from db.AddIngredientsScript import *
+##import pymongo
+## from http_server.server_init import init_server
+#from http_server import JsonOperations ##import *
+from fast_test_operations.first_impression import first_try
+from db import db_add_ingredients ## import *
 
 # my tries to serialize / deserialize from/to json
 # j = '{"action": "print", "method": "onData", "data": "Madan Mohan"}'

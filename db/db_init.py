@@ -1,17 +1,16 @@
 __author__ = 'mmalca'
 
 import pymongo
+##from db import db_add_ingredients
 
-#Connect to the DB
-myclient = pymongo.MongoClient("mongodb://193.106.55.98:5000/")
+def init_collection(collection_name):
+    #Connect to the DB
+    mongo_server = pymongo.MongoClient("mongodb://193.106.55.98:5000/")
 
-#use DB
-mydb = myclient["RecipeForMe"]
-#specific collection name
-mycol = mydb["ingredients"]
-#Create a dictionary and add to the Collection
-mydict = {}#{ "name": "John", "address": "Highway 37" }
-x = mycol.insert_one(mydict)
-y = mycol.find_one()
-print("hello world - commit 2")
-print("hello world - commit 3")
+    #use DB
+    db = mongo_server["RecipeForMe"]
+
+    #specific collection name
+    collection = mongo_server[collection_name]
+
+    return collection
