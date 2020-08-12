@@ -2,6 +2,7 @@
 
 import fasttext
 import fasttext.util
+from scipy import spatial
 
 def first_try():
     #fasttext.util.download_model('en', if_exists='ignore')
@@ -182,7 +183,7 @@ def first_try():
     ]
 
     ft = fasttext.load_model('cc.he.300.bin')
-    ft_en = fasttext.load_model('cc.he.300.bin')
+    ft_en = fasttext.load_model('cc.en.300.bin')
 
 
     for v1, v1_en in zip(ing, ing_en):
