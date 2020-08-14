@@ -13,8 +13,20 @@ from db import db_operations ## import *
 #print(m)
 # end of json tests
 
-first_try()
+##first_try()
 #Connect to the DB
 #myclient = pymongo.MongoClient("mongodb://193.106.55.98:5000/")
 #GetIngredients()
 #init_server()
+from db import db_init
+collection = db_init.init_collection('recipes')
+dict=collection.find_one({"name":"תבשיל שעועית ואפונה"})
+##for recipe_ing in dict['ingredients']:
+  ##  print(recipe_ing)
+
+from db import db_operations
+#db_operations.add_ingredients_from_recipe(dict)
+
+col =  db_init.init_collection('counters')
+#col.insert({"_id":get_next_sequence_value("ingredientid"),
+                #    "name":recipe_ing})

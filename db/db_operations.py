@@ -32,9 +32,16 @@ def add_ingredients_from_recipe(recipe):
     #Create a dictionary and add to the Collection
     ##TO: for each ingredient in list: if does not exist: add to
 
-    collection = init_collection("ingredients")
+    ingredients = init_collection("ingredients")
 
-
+    for recipe_ing in recipe['ingredients']:
+        ##print(recipe_ing)
+        if ingredients.find_one({"name":recipe_ing}) == None:
+            #this is a new ingredient, add to ingredients collection:
+            ingredients.insert({"_id":get_next_sequence_value("ingredientid"),
+                                "name":recipe_ing,
+                                "vector":"4"#fast text op,
+                                })
     # for each recipe_ing in Recipe.ingredients:
         # for each ing in collection(ingredients list)
         # if recipe_ing._id != ing._id and it is the last ing in collection(ingredients list):
