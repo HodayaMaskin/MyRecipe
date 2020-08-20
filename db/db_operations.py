@@ -44,7 +44,7 @@ def add_ingredients_from_recipe(recipe):
                                 })
     # for each recipe_ing in Recipe.ingredients:
         # for each ing in collection(ingredients list)
-        # if recipe_ing._id != ing._id and it is the last ing in collection(ingredients list):
+        # if recipe_ing._id != ing._id and it is the last ing in collection(ingredients list):save
             #create new id if needed!! id =
             # check vector using fast text ft_vector = []
             # ingredient_dictionary = { _id = id## check the id how to append a new one
