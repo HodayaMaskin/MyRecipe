@@ -81,3 +81,22 @@ from db import db_operations
 #     print()
 
 ######################################################################################################
+                #    "name":recipe_ing})
+
+
+# # Hodaya's test
+# import pymongo
+# mongo_server = pymongo.MongoClient("mongodb://193.106.55.98:5000/")
+# from algorithm import algorithm_helper
+# id = algorithm_helper.get_ingredient_id_by_name("בצל")
+#
+# collection = db_init.init_collection('recipes')
+# recipe = collection.find_one()
+# print(recipe)
+#
+# collection = db_init.init_collection('ingredients')
+# #doc = collection.find_one({ "name": "בצל" })
+# items_in_ing_col_count = collection.count_documents({})
+# bin1 = algorithm_helper.from_recipe_to_ingredients_binary(recipe, items_in_ing_col_count)
+# bin = algorithm_helper.from_ingredients_to_binary(recipe['ingredients'], items_in_ing_col_count)
+# print(bin)
