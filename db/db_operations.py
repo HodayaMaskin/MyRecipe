@@ -73,3 +73,34 @@ def get_next_sequence_value(collection_name, sequence_name):
     #.insert({"_id":get_next_sequence_value("ingredientid"),
     #       "name": ....
     #       ...})
+
+def add_recipe(name, ingredients, directions, picture_type):
+    collection = init_collection('recipes')
+    collection.insert_one({"name":name,
+                           "ingredients":ingredients,
+                           "directions":directions
+                           #"pictureName":'C:\pictures\default.jpg'
+                           })
+    # get id
+    myquery = { "name": name }
+    mydoc = collection.find(myquery)
+    # update picture name
+    for doc in mydoc: # suppose to find only one
+
+        id = doc["_id"]
+    # add picture name filed
+        picture_url = "C:\pictures\\" + str(id) + "." + picture_type
+        updated = collection.find_one_and_update(
+            {"_id" : id},
+            {"$set":
+                {"pictureName": picture_url}
+            },upsert=True
+        )
+    #update={ "$set": { "pictureName": { "$regex": "^S" } } }
+    #collection.update_one(myquery, update)
+
+
+
+    # print the doc dict returned by API call
+        if type(updated) == dict:
+            print ("doc dict obj:", updated)
