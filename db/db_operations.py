@@ -1,6 +1,6 @@
 from db.db_init import init_collection
 ##import pymongo
-
+from fast_test_operations import fast_text
 
 def get_ingredients_list():
     ## myclient = pymongo.MongoClient("mongodb://193.106.55.98:5000/")
@@ -33,46 +33,37 @@ def add_ingredients_from_recipe(recipe):
     ##TO: for each ingredient in list: if does not exist: add to
 
     ingredients = init_collection("ingredients")
+    counters = init_collection("counters")
 
     for recipe_ing in recipe['ingredients']:
         ##print(recipe_ing)
-        if ingredients.find_one({"name":recipe_ing}) == None:
-            #this is a new ingredient, add to ingredients collection:
-            ingredients.insert({"_id":get_next_sequence_value("ingredientid"),
-                                "name":recipe_ing,
-                                "vector":"4"#fast text op,
+        name = recipe_ing["name"]
+        if (ingredients.find_one({"name":name}) == None) and name != "":
+            #only is it is a new ingredient, add to ingredients collection:
+            vector = fast_text.get_vector(name) ##use fsst text op
+            vector_list = vector.tolist()
+            id = get_next_sequence_value()
+            ingredients.insert_one({"_id": id,
+                                "name":name,
+                                "vector": vector_list
                                 })
-    # for each recipe_ing in Recipe.ingredients:
-        # for each ing in collection(ingredients list)
-        # if recipe_ing._id != ing._id and it is the last ing in collection(ingredients list):save
-            #create new id if needed!! id =
-            # check vector using fast text ft_vector = []
-            # ingredient_dictionary = { _id = id## check the id how to append a new one
-                                        # "name" : recipe_ing.name,
-                                        #"vector" : ft_vector []
-                                        # }
-                                     ###{ "name": "John", "address": "Highway 37" }
 
-
-
-    # ingredient_to_add = collection.insert_one(ingredient_dictionary)
-
-    ##y = mycol.find_one()
 
 #returns the next sequence for the increasing counter (sequence_name=ingredientid)
-def get_next_sequence_value(collection_name, sequence_name):
-    collection = init_collection(collection_name)
+def get_next_sequence_value():
+    collection = init_collection("counters")
     sequence_document = collection.find_and_modify(
-        query = {'_id': sequence_name },
+        query = {'_id': "ingredientid" },
         update = {"$inc":{'sequence_value':1}},
         new = 'true' ##?
     )
-    return sequence_document.sequence_value
+    return sequence_document["sequence_value"]
 
     ##### TO USE WHEN INSERTING INGREDIENT: #####
     #.insert({"_id":get_next_sequence_value("ingredientid"),
     #       "name": ....
     #       ...})
+
 
 def add_recipe(name, ingredients, directions, picture_type):
     collection = init_collection('recipes')
@@ -81,10 +72,12 @@ def add_recipe(name, ingredients, directions, picture_type):
                            "directions":directions
                            #"pictureName":'C:\pictures\default.jpg'
                            })
-    # get id
-    myquery = { "name": name }
-    mydoc = collection.find(myquery)
+    #adding picture name
+    myquery = { "name": name ,  "pictureName" : { "$exists": False } }
+    mydoc = collection.find(myquery) ## change to find_one?? and then loop is not required??
     # update picture name
+
+    ##add validation: only if there is only one doc -- add (for case of )
     for doc in mydoc: # suppose to find only one
 
         id = doc["_id"]
@@ -98,9 +91,9 @@ def add_recipe(name, ingredients, directions, picture_type):
         )
     #update={ "$set": { "pictureName": { "$regex": "^S" } } }
     #collection.update_one(myquery, update)
-
+        add_ingredients_from_recipe(doc)
 
 
     # print the doc dict returned by API call
-        if type(updated) == dict:
-            print ("doc dict obj:", updated)
+    if type(updated) == dict:
+        print ("doc dict obj:", updated)
