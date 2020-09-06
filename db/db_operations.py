@@ -11,7 +11,7 @@ def get_ingredients_list():
     return ingredients_list
 
 def get_recipes_list():
-    recipes_collection = init_collection("ingredients")
+    recipes_collection = init_collection("recipes")
     recipes_list = recipes_collection.find()
     return recipes_list
 

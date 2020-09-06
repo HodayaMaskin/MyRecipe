@@ -17,10 +17,12 @@ def from_recipe_to_ingredients_binary(recipe, ingredients_docs_count):
 def get_ingredient_id_by_name(ingredient_name):
     collection = db_init.init_collection('ingredients')
     doc = collection.find_one({"name": ingredient_name})
-    return doc['id']
+    id = doc['_id']
+    return id
 
 # returns if all recipe ingredients are in the client ingredients list and the missed ingredients as array with 1 in each missed ingredient id
 def ingredients_to_recipe_comparison(recipe, client_ingredients, ingredients_docs_count):
+    print(recipe)
     recipe_ingredients = recipe['ingredients']
     bin_recipe = from_ingredients_to_binary(recipe_ingredients, ingredients_docs_count)
     bin_client = from_ingredients_to_binary(client_ingredients, ingredients_docs_count)
