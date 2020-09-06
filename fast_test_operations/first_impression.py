@@ -5,11 +5,11 @@ import fasttext.util
 from scipy import spatial
 
 def first_try():
-    #fasttext.util.download_model('en', if_exists='ignore')
+    fasttext.util.download_model('he', if_exists='ignore')
 
-    # ft_en = fasttext.load_model('cc.en.300.bin')
+    ft_he = fasttext.load_model('cc.he.300.bin')
     # fasttext.util.reduce_model(ft_en, 100)
-    # ft_en.save_model('cc.en.100.bin')
+    #ft_he.save_model('cc.en.100.bin')
     #
     # print("done english")
     #fasttext.util.download_model('en', if_exists='ignore')

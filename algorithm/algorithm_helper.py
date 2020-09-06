@@ -39,7 +39,8 @@ def ingredients_to_recipe_comparison(recipe, client_ingredients, ingredients_doc
 
 def xor_arrays(arr1, arr2):
     i = 0
-    xor_result = [0] * 10
+    arraySize = len(arr1)
+    xor_result = [0] * arraySize
     for ing in arr1:
         xor_result[i] = ing ^ arr2[i]
         i = i + 1
@@ -48,7 +49,8 @@ def xor_arrays(arr1, arr2):
 
 def and_arrays(arr1, arr2):
     i = 0
-    and_result = [0] * 10
+    arraySize = len(arr1)
+    and_result = [0] * arraySize
     for ing in arr1:
         and_result[i] = ing & arr2[i]
         i = i + 1
