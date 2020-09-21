@@ -2,10 +2,14 @@ __author__ = 'mmalca'
 
 from algorithm import algorithm_helper
 from db import db_operations
+from scipy import spatial
+
 ### CORE ALGORITHM FUNCTION ###
 
 def choose_recipe(ingredients_from_user):
-
+    ing_count_threshold = 0.4
+    distance_threshold = 0.5
+    final_list = []
     ## access to the ingredients list from db
     ingredients_list = db_operations.get_ingredients_list()
     ingredients_count = ingredients_list.count()
@@ -13,16 +17,42 @@ def choose_recipe(ingredients_from_user):
     recipes_list = db_operations.get_recipes_list()
     print(recipes_list.count())
     for recipe in recipes_list:
-        is_match, missed_ingredients = algorithm_helper.ingredients_to_recipe_comparison(recipe, ingredients_from_user, ingredients_count)
-        if (True):
-            recipe["score"] = 100;
+        is_match, missed_ingredients = algorithm_helper.ingredients_to_recipe_comparison(recipe, ingredients_from_user,
+                                                                                         ingredients_count)
+        if is_match:
+            recipe["score"] = 100
             print(recipe)
-           # for user_ingredient in ingredients_from_user:
-            #    if recipe_ingredient._id != user_ingredient._id and recipe_ingredient._id:
+            final_list.append(recipe)
+            continue
+        else:
+            missed_ing_count = algorithm_helper.how_many_missed_ingredients(missed_ingredients)
+            recipe_ing_count = len(recipe['ingredients'])
+            rate = (missed_ing_count / recipe_ing_count)
+            if False:  # rate > ing_count_threshold:
+                print("missed more than " + ing_count_threshold + "continue")
+                continue
+            else:
+                i = 0
+                for missed_ing in missed_ingredients:
+                    if missed_ing != 1:
+                        i += 1
+                        continue
+                    else:
+                        rec_missed_ing = db_operations.get_ing_by_id(i)
+                        rec_vec = rec_missed_ing['vector']
+                        for user_ing_id in ingredients_from_user:
+                            user_ing = db_operations.get_ing_by_id(user_ing_id)
+                            user_vec = user_ing['vector']
+                            distance_vec = 1 - spatial.distance.cosine(rec_vec, user_vec)
+                            print(distance_vec)
+                        i += 1
+
+        # for user_ingredient in ingredients_from_user:
+        #    if recipe_ingredient._id != user_ingredient._id and recipe_ingredient._id:
 
     # checking vector distance between ingredients and setting score to recipe
 
     ###
 
     ## send to user back, using http_server functions
-    print() ## to delete after
+    print()  ## to delete after

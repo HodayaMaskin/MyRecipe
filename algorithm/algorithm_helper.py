@@ -1,16 +1,21 @@
 from db import db_init
 
+
 def from_ingredients_to_binary(ingredients, ingredients_docs_count):
     bin_ing = [0] * (ingredients_docs_count + 1)
-    for ing in ingredients:
-        id = get_ingredient_id_by_name(ing['name'])
-        bin_ing[id] = 1
+    for ing_id in ingredients:
+        # id = get_ingredient_id_by_name(ing['name'])
+        bin_ing[ing_id] = 1
     return bin_ing
 
 
 def from_recipe_to_ingredients_binary(recipe, ingredients_docs_count):
+    bin_ing = [0] * (ingredients_docs_count + 1)
     ingredients = recipe['ingredients']
-    bin_ing = from_ingredients_to_binary(ingredients, ingredients_docs_count)
+    for ing in ingredients:
+        ing_id = get_ingredient_id_by_name(ing['name'])
+        bin_ing[ing_id] = 1
+    # bin_ing = from_ingredients_to_binary(ingredients, ingredients_docs_count)
     return bin_ing
 
 
@@ -20,17 +25,18 @@ def get_ingredient_id_by_name(ingredient_name):
     id = doc['_id']
     return id
 
+
 # returns if all recipe ingredients are in the client ingredients list and the missed ingredients as array with 1 in each missed ingredient id
 def ingredients_to_recipe_comparison(recipe, client_ingredients, ingredients_docs_count):
     print(recipe)
     recipe_ingredients = recipe['ingredients']
-    bin_recipe = from_ingredients_to_binary(recipe_ingredients, ingredients_docs_count)
+    bin_recipe = from_recipe_to_ingredients_binary(recipe, ingredients_docs_count)
     bin_client = from_ingredients_to_binary(client_ingredients, ingredients_docs_count)
     # xor result will return the missed ingredients or the ingredients that the client have but do not appear in the recipe
     xor_result = xor_arrays(bin_recipe, bin_client)
-    #check if xor result all filled by 0 -> client have all needed ingredients for recipe
+    # check if xor result all filled by 0 -> client have all needed ingredients for recipe
     ingredients_equal = is_zero_array(xor_result)
-    if(ingredients_equal):
+    if (ingredients_equal):
         return True, xor_result
     # and result between the recipe and the xor will return only yhe ingredients that needed for recipe but the client missed
     and_result = and_arrays(bin_recipe, xor_result)
@@ -62,3 +68,11 @@ def is_zero_array(arr):
         if i != 0:
             return False
     return True
+
+
+def how_many_missed_ingredients(missed_ing_arr):
+    counter = 0
+    for ing in missed_ing_arr:
+        if ing == 1:
+            counter += 1
+    return counter

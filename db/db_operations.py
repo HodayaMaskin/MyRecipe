@@ -97,3 +97,7 @@ def add_recipe(name, ingredients, directions, picture_type):
     # print the doc dict returned by API call
     if type(updated) == dict:
         print ("doc dict obj:", updated)
+
+def get_ing_by_id(id):
+    ingredients_collection = init_collection("ingredients")
+    return ingredients_collection.find_one({"_id" : id})
