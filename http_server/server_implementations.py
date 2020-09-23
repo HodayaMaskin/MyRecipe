@@ -4,7 +4,8 @@ import json
 ##from urlparse import urlparse
 ##from urlparse import urlparse, parse_qs
 from urllib.parse import urlparse, parse_qs
-
+from db import db_operations
+from algorithm import algorithm
 
 def get_ingredients_list(self):
     self.send_response(200)
@@ -13,18 +14,20 @@ def get_ingredients_list(self):
     self.end_headers()
 
     #on DB need to add "similar_ing": [1, 2, 3, 4]
-    db_response = {
-            "ingredients": [
-                {
-                    "_id": 1,
-                    "name": "tomato"
-                },
-                {
-                    "_id": 2,
-                    "name": "oil"
-                }
-            ]
-    }
+    db_response = db_operations.get_ingredients_list() ##getting only the id and name
+
+    #     {
+    #         "ingredients": [
+    #             {
+    #                 "_id": 1,
+    #                 "name": "tomato"
+    #             },
+    #             {
+    #                 "_id": 2,
+    #                 "name": "oil"
+    #             }
+    #         ]
+    # }
     # json_string = json.dumps()
     self.wfile.write(json.dumps(db_response).encode('utf-8')) #on client side need to decode: json_from_server.decode('utf_8')
     print("sent json")
@@ -46,35 +49,37 @@ def get_recipe(self):
     print(ingredients_from_user)
 
 
-    ##ALGORITHM function: find a recipe: pull from db
+
     self.send_response(200)
     self.send_header('Access-Control-Allow-Origin', '*')
     self.send_header('Content-Type', 'application/json')
     self.end_headers()
 
+    ##ALGORITHM function: find a recipe: pull from db
+    recipe = algorithm.choose_recipe()
     #no "score" parameter on DB
-    recipe = {
-         "recipe_name": "Cake",
-         "picture_url": "C:\pictures\1.jpg",
-         "score": 95,
-         "ingredients": [
-                {
-                    "_id": 1,
-                    "name": "tomato",
-                    "amount": "2 units"
-                },
-                {
-                    "_id": 2,
-                    "name": "oil",
-                    "amount": "1 cup"
-                }
-         ],
-         "DIRECTIONS": [
-             "step 1",
-             "step 2",
-             "step 3"
-            ]
-    }
+    # recipe = {
+    #      "recipe_name": "Cake",
+    #      "picture_url": "C:\pictures\1.jpg",
+    #      "score": 95,
+    #      "ingredients": [
+    #             {
+    #                 "_id": 1,
+    #                 "name": "tomato",
+    #                 "amount": "2 units"
+    #             },
+    #             {
+    #                 "_id": 2,
+    #                 "name": "oil",
+    #                 "amount": "1 cup"
+    #             }
+    #      ],
+    #      "DIRECTIONS": [
+    #          "step 1",
+    #          "step 2",
+    #          "step 3"
+    #         ]
+    # }
 
     self.wfile.write(json.dumps(recipe).encode('utf-8')) #on client side need to decode: json_from_server.decode('utf_8')
     print("sent json")

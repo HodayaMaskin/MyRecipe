@@ -2,12 +2,9 @@ from db.db_init import init_collection
 ##import pymongo
 from fast_test_operations import fast_text
 
-def get_ingredients_list():
-    ## myclient = pymongo.MongoClient("mongodb://193.106.55.98:5000/")
-    ## mydb = myclient["RecipeForMe"]
-    ## ingredientsCollection = mydb["ingredients"]
+def get_ingredients_list(): ## returns only names and _ids
     ingredients_collection = init_collection("ingredients")
-    ingredients_list = ingredients_collection.find()
+    ingredients_list = ingredients_collection.find({},{'name' : 1})
     return ingredients_list
 
 def get_recipes_list():
@@ -15,18 +12,29 @@ def get_recipes_list():
     recipes_list = recipes_collection.find()
     return recipes_list
 
-## not needed
-def add_ingredients(ingredients_list):
+#### TO NOT USE !!!! #########################
+def add_ingredients(ingredients_list): ## gerring list of names - strings
     # myclient = pymongo.MongoClient("mongodb://193.106.55.98:5000/")
     # mydb = myclient["RecipeForMe"]
     # ingredientsCollection = mydb["ingredients"]
     ingredients_collection = init_collection("ingredients")
 
-    ingredients_collection.insert_many(ingredients_list)
+    # ingredients_collection.insert_many(ingredients_list)
+    #
+    # documents = ingredients_collection.find()
+    # for x in documents:
+    #     print(x)
 
-    documents = ingredients_collection.find()
-    for x in documents:
-        print(x)
+
+    for ing in ingredients_list:
+        vector = fast_text.get_vector(ing) ##use fsst text op
+        vector_list = vector.tolist()
+        id = get_next_sequence_value()
+        ingredients_collection.insert_one({"_id": id,
+                                "name":ing,
+                                "vector": vector_list
+                                })
+#############################################
 
 def add_ingredients_from_recipe(recipe):
     #Create a dictionary and add to the Collection
@@ -67,6 +75,10 @@ def get_next_sequence_value():
 
 def add_recipe(name, ingredients, directions, picture_type):
     collection = init_collection('recipes')
+    exist = collection.find_one({"name":name})
+    if exist != None:
+        print("ERROR - Already exist recipe with this name!")
+        return
     collection.insert_one({"name":name,
                            "ingredients":ingredients,
                            "directions":directions

@@ -240,3 +240,43 @@ for i in ingredients:
 #     print (i)
 #######################################################################################
 #######################################################################################
+
+###  September 23 ###
+##
+# ingredients = [{"name": "פסטה", "amount": "1 כוס"}, {"name": "מים", "amount":"1/2 כוס"}, {"name": "חלב", "amount":"2 כפות"}, {"name": "חמאה", "amount":"1 כפית"}, {"name": "גבינה צהובה", "amount":"1/2 כוס"}, {"name": "מלח", "amount":"1/2 כפית"}]
+# directions = ["מכניסים את הפסטה לכוס או קערית גדולה.", "מוסיפים את המים והמלח ומערבבים","מכניסים למיקרוגל ומחממים בעוצמה הגבוהה במשך 4.5 דקות." , "מוציאים מהמיקרוגל ויוצקים על הפסטה את החלב.", "מניחים על הפסטה את החמאה ואת הגבינות המגורדות ומערבבים", "מכניסים שוב למיקרוגל לחצי דקה נוספת. מוציאים, מערבבים ומגישים."]
+#
+# db_operations.add_recipe("מק אנד צ'יז במיקרו",ingredients , directions, "jpg")
+
+#     ########### test - printing the recipe that we have inserted:
+#
+
+#############3
+# from db import db_init
+# collection = db_init.init_collection('recipes')
+# myquery = { "name":"מק אנד צ'יז במיקרו"}
+#
+#
+# r = collection.find(myquery)
+# for i in r:
+#     print(i)
+#     print("---")
+#############
+# from db import db_init
+# collection = db_init.init_collection('ingredients')
+#
+# f = collection.find_one({"name":"בצל"})
+# print(f)
+
+# db_response = db_operations.get_ingredients_list()
+# for i in db_response:
+#     print (i)
+#     print("\n=====\n"  )
+
+#from db import db_operations
+#db_operations.add_ingredients(["בצל סגול"])
+
+# from db import db_init
+# collection = db_init.init_collection('ingredients')
+# f = collection.find_one({"name":"בצל סגול"})
+# print(f)
