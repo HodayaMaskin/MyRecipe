@@ -9,7 +9,7 @@ def get_ingredients_list(): ## returns only names and _ids
 
 def get_recipes_list():
     recipes_collection = init_collection("recipes")
-    recipes_list = recipes_collection.find()
+    recipes_list = recipes_collection.find({},{"_id": 0})
     return recipes_list
 
 #### TO NOT USE !!!! #########################
@@ -55,7 +55,6 @@ def add_ingredients_from_recipe(recipe):
                                 "name":name,
                                 "vector": vector_list
                                 })
-            print("log: ingredient ---- " + name + " ---- was inserted to ingredients list!")
 
 
 #returns the next sequence for the increasing counter (sequence_name=ingredientid)

@@ -16,14 +16,14 @@ def choose_recipe(ingredients_from_user):
     ingredients_count = ingredients_list.count()
     ## access to recipes list in db
     recipes_list = db_operations.get_recipes_list()
-    print(recipes_list.count())
     for recipe in recipes_list:
+        if recipe['name'] == 'סלט ירקות בסיסי':
+            break
         is_match, missed_ingredients = algorithm_helper.ingredients_to_recipe_comparison(recipe, ingredients_from_user,
                                                                                          ingredients_count)
         score = 100
         if is_match:
             recipe["score"] = score
-            print(recipe)
             final_list.append(recipe)
             continue
         else:
@@ -50,7 +50,6 @@ def choose_recipe(ingredients_from_user):
                             user_ing = db_operations.get_ing_by_id(user_ing_id)
                             user_vec = user_ing['vector']
                             distance_vec = 1 - spatial.distance.cosine(rec_vec, user_vec)
-                            print(distance_vec)
                             if distance_vec > distance_threshold:
                                 if distance_vec  > max_dist:
                                     max_dist = distance_vec
@@ -69,6 +68,6 @@ def choose_recipe(ingredients_from_user):
     # checking vector distance between ingredients and setting score to recipe
 
     ###
-
+    return final_list
     ## send to user back, using http_server functions
     print()  ## to delete after

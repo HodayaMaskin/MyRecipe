@@ -28,7 +28,6 @@ def get_ingredient_id_by_name(ingredient_name):
 
 # returns if all recipe ingredients are in the client ingredients list and the missed ingredients as array with 1 in each missed ingredient id
 def ingredients_to_recipe_comparison(recipe, client_ingredients, ingredients_docs_count):
-    print(recipe)
     recipe_ingredients = recipe['ingredients']
     bin_recipe = from_recipe_to_ingredients_binary(recipe, ingredients_docs_count)
     bin_client = from_ingredients_to_binary(client_ingredients, ingredients_docs_count)

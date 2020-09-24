@@ -15,6 +15,11 @@ def get_ingredients_list(self):
 
     #on DB need to add "similar_ing": [1, 2, 3, 4]
     db_response = db_operations.get_ingredients_list() ##getting only the id and name
+    print("db response:")
+    list = []
+    for i in db_response:
+        list.append(i)
+
 
     #     {
     #         "ingredients": [
@@ -29,7 +34,7 @@ def get_ingredients_list(self):
     #         ]
     # }
     # json_string = json.dumps()
-    self.wfile.write(json.dumps(db_response).encode('utf-8')) #on client side need to decode: json_from_server.decode('utf_8')
+    self.wfile.write(json.dumps(list).encode('utf-8')) #on client side need to decode: json_from_server.decode('utf_8')
     print("sent json")
 
 def get_recipe(self):
@@ -45,10 +50,13 @@ def get_recipe(self):
     #### Option2:
     query_components = parse_qs(urlparse(self.path).query)
     ingredients_from_user = query_components["ingredients"]
+    ing_list_int = []
+
+    ing_list_str = ingredients_from_user[0].split(",")
+    for ing in ing_list_str:
+        ing_list_int.append(int(ing))
+
     print("received ingredients_list from user:")
-    print(ingredients_from_user)
-
-
 
     self.send_response(200)
     self.send_header('Access-Control-Allow-Origin', '*')
@@ -56,7 +64,11 @@ def get_recipe(self):
     self.end_headers()
 
     ##ALGORITHM function: find a recipe: pull from db
-    recipe = algorithm.choose_recipe()
+    recipe = algorithm.choose_recipe(ing_list_int)
+    for r in recipe:
+        print(r)
+    print(type(recipe))
+
     #no "score" parameter on DB
     # recipe = {
     #      "recipe_name": "Cake",
