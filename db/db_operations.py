@@ -55,6 +55,7 @@ def add_ingredients_from_recipe(recipe):
                                 "name":name,
                                 "vector": vector_list
                                 })
+            print("log: ingredient ---- " + name + " ---- was inserted to ingredients list!")
 
 
 #returns the next sequence for the increasing counter (sequence_name=ingredientid)

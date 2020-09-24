@@ -11,25 +11,24 @@ from db import db_operations
 
 
 ######################################################################################################
-    ####  Adding new recipe ####
+    ###  Adding new recipe ####
 
 
-#from db import db_operations
-#ingredients = [{"name": "שוקולד מריר", "amount": "200 גרם"}, {"name": "שמנת מתוקה", "amount":"500 מל"}]
-# directions = ["שוברים את השוקולד לקוביות ושמים בקערה.", "מוסיפים לקערה 250 מל שמנת מתוקה וממיסים יחד במיקרוגל או על בן מארי, עד שהתערובת אחידה.", "מצננים את תערובת השוקולד במקרר במשך 2-3 שעות לפחות, או עד שהיא קרה לגמרי.", "מעבירים את תערובת השוקולד הקרה לקערת מיקסר ומוסיפים פנימה את יתרת השמנת.", "מקציפים יחד במהירות גבוהה עד שמתקבל מוס אחיד ומעט רך.", "מעבירים את המוס לשק זילוף וממלאים את הכוסות עד ל-2/3 מגובהן.", "מקשטים בשוקולד קצוץ ומגישים."]
+# from db import db_operations
+# name = ""
+# ingredients = []
+# directions = []
+# db_operations.add_recipe(name,ingredients , directions, "jpg")
 #
-# db_operations.add_recipe("מוס שוקולד",ingredients , directions, "jpg")
-
-    ############ test - printing the recipe that we have inserted:
-
+#     ########### test - printing the recipe that we have inserted:
+#
 # from db import db_init
 # collection = db_init.init_collection('recipes')
-# myquery = { "name":"מוס שוקולד"}
+# myquery = { "name":name}
 # mydoc = collection.find(myquery)
 # for doc in mydoc:
 #     id = doc["_id"]
 #     print(doc)
-
     ########### fixing specific element of our recipe if needed
 
 # from db import db_init
