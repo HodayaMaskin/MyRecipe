@@ -26,12 +26,13 @@ def add_ingredients(ingredients_list): ## gerring list of names - strings
     #     print(x)
 
 
-    for ing in ingredients_list:
-        vector = fast_text.get_vector(ing) ##use fsst text op
-        vector_list = vector.tolist()
-        id = get_next_sequence_value()
-        ingredients_collection.insert_one({"_id": id,
-                                "name":ing,
+   # for ing in ingredients_list:
+    vector = fast_text.get_vector(ingredients_list) ##use fsst text op
+    vector_list = vector.tolist()
+    #id = get_next_sequence_value()
+    id=40
+    ingredients_collection.insert_one({"_id": id,
+                                "name":ingredients_list,#ing,
                                 "vector": vector_list
                                 })
 #############################################

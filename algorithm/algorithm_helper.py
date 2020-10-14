@@ -33,8 +33,9 @@ def ingredients_to_recipe_comparison(recipe, client_ingredients, ingredients_doc
     bin_client = from_ingredients_to_binary(client_ingredients, ingredients_docs_count)
     # xor result will return the missed ingredients or the ingredients that the client have but do not appear in the recipe
     xor_result = xor_arrays(bin_recipe, bin_client)
+    and_result = and_arrays(bin_recipe, xor_result)
     # check if xor result all filled by 0 -> client have all needed ingredients for recipe
-    ingredients_equal = is_zero_array(xor_result)
+    ingredients_equal = is_zero_array(and_result)
     if (ingredients_equal):
         return True, xor_result
     # and result between the recipe and the xor will return only yhe ingredients that needed for recipe but the client missed

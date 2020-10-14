@@ -17,10 +17,8 @@ def choose_recipe(ingredients_from_user):
     ## access to recipes list in db
     recipes_list = db_operations.get_recipes_list()
     for recipe in recipes_list:
-        #if recipe['name'] == 'סלט ירקות בסיסי':
         #   break
-        is_match, missed_ingredients = algorithm_helper.ingredients_to_recipe_comparison(recipe, ingredients_from_user,
-                                                                                         ingredients_count)
+        is_match, missed_ingredients = algorithm_helper.ingredients_to_recipe_comparison(recipe, ingredients_from_user, ingredients_count)
         score = 100
         if is_match:
             score = round(score,2)
@@ -44,7 +42,6 @@ def choose_recipe(ingredients_from_user):
                         #score = 100
                         #max_score = 0
                         rec_missed_ing = db_operations.get_ing_by_id(i)
-
                         rec_vec = rec_missed_ing['vector']
                         max_dist = 0
                         for user_ing_id in ingredients_from_user:

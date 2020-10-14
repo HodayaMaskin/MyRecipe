@@ -20,11 +20,12 @@ def remove_rec():
 
 def get_ing():
     collection = db_init.init_collection('ingredients')
-    #myquery = { "name":name}
+    #myquery = { "name":"תפוח אדמה"}
     mydoc = collection.find()
+    print(mydoc)
     for doc in mydoc:
         id = doc["_id"]
-        print(doc['name'])
+        print(id)
 from db import db_operations
 from db import db_init
 def add_rec():
