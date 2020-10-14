@@ -2,7 +2,7 @@ from db import db_init
 
 
 def from_ingredients_to_binary(ingredients, ingredients_docs_count):
-    bin_ing = [0] * (ingredients_docs_count + 1)
+    bin_ing = [0] * (ingredients_docs_count + 4)
     for ing_id in ingredients:
         # id = get_ingredient_id_by_name(ing['name'])
         bin_ing[ing_id] = 1
@@ -10,7 +10,7 @@ def from_ingredients_to_binary(ingredients, ingredients_docs_count):
 
 
 def from_recipe_to_ingredients_binary(recipe, ingredients_docs_count):
-    bin_ing = [0] * (ingredients_docs_count + 1)
+    bin_ing = [0] * (ingredients_docs_count + 4)
     ingredients = recipe['ingredients']
     for ing in ingredients:
         ing_id = get_ingredient_id_by_name(ing['name'])

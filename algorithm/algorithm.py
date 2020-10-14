@@ -17,16 +17,13 @@ def choose_recipe(ingredients_from_user):
     ## access to recipes list in db
     recipes_list = db_operations.get_recipes_list()
     for recipe in recipes_list:
-        print(recipe)
-        print()
-        print("----------")
-        print()
-        if recipe['name'] == 'אורז ברוטב עגבניות':
-            break
+        #if recipe['name'] == 'סלט ירקות בסיסי':
+        #   break
         is_match, missed_ingredients = algorithm_helper.ingredients_to_recipe_comparison(recipe, ingredients_from_user,
                                                                                          ingredients_count)
         score = 100
         if is_match:
+            score = round(score,2)
             recipe["score"] = score
             final_list.append(recipe)
             continue
@@ -47,15 +44,11 @@ def choose_recipe(ingredients_from_user):
                         #score = 100
                         #max_score = 0
                         rec_missed_ing = db_operations.get_ing_by_id(i)
-                        ### ingredients list - get ing by id:
-
 
                         rec_vec = rec_missed_ing['vector']
                         max_dist = 0
                         for user_ing_id in ingredients_from_user:
                             user_ing = db_operations.get_ing_by_id(user_ing_id)
-                            ### ingredients list - get ing by id:
-
                             user_vec = user_ing['vector']
                             distance_vec = 1 - spatial.distance.cosine(rec_vec, user_vec)
                             if distance_vec > distance_threshold:
@@ -68,6 +61,7 @@ def choose_recipe(ingredients_from_user):
                         i += 1
 
                     if score > score_threshold:
+                        score = round(score, 2)
                         recipe["score"] = score
                         final_list.append(recipe)
         # for user_ingredient in ingredients_from_user:
@@ -76,6 +70,9 @@ def choose_recipe(ingredients_from_user):
     # checking vector distance between ingredients and setting score to recipe
 
     ###
+    #sorted_obj = dict(final_list)
+    final_list = sorted(final_list, key=lambda i: i['score'], reverse=True)
+    print(final_list)
     return final_list
     ## send to user back, using http_server functions
     print()  ## to delete after

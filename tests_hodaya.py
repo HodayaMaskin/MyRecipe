@@ -2,6 +2,53 @@ __author__ = 'mmalca'
 
 import fasttext
 import fasttext.util
+from db import db_init
+
+def get_rec():
+    collection = db_init.init_collection('recipes')
+    mydoc = collection.find()
+    for doc in mydoc:
+        id = doc["_id"]
+        print(doc)
+
+def remove_rec():
+    collection = db_init.init_collection('recipes')
+    collection.delete_one({"name": "פיתה מטוגנת"})
+
+    collection2 = db_init.init_collection('ingredients')
+    collection2.delete_one({"name":"פיתות"})
+
+def get_ing():
+    collection = db_init.init_collection('ingredients')
+    #myquery = { "name":name}
+    mydoc = collection.find()
+    for doc in mydoc:
+        id = doc["_id"]
+        print(doc['name'])
+from db import db_operations
+from db import db_init
+def add_rec():
+    name = "סלט קפרזה"
+    ingredients = [{"name":"עגבנית שרי","amount" :"חופן"}, {"name":"מוצרלה","amount" :"200 גרם מדליונים"}, {"name":"בזיליקום","amount" :"כפית"}, {"name":"שומשום","amount" :"2 כפות"}, {"name":"פלפל שחור","amount" :"חצי כפית"},{"name":"מלח","amount" :"חצי כפית"}]
+    directions = ["להרתיח את המים", "להוסיף את האורז עם התבלינים", "לבשל כ20 דק'", "לפזר שומשום מעל ולהגיש"]
+    db_operations.add_recipe(name,ingredients , directions, "jpg")
+#
+# #     ########### test - printing the recipe that we have inserted:
+# #
+
+    collection = db_init.init_collection('recipes')
+    myquery = { "name":name}
+    mydoc = collection.find(myquery)
+    for doc in mydoc:
+        id = doc["_id"]
+        print(doc)
+#
+#     ########### test - print new ingredirnts list
+# ingredients_list = db_operations.get_ingredients_list()
+# print("new ingredients list (only names and ids): ---------------")
+# for i in ingredients_list:
+#     print(i)
+
 
 #fasttext.util.download_model('he', if_exists='ignore')
 #ft_he = fasttext.load_model('cc.he.300.bin')
@@ -10,21 +57,31 @@ import fasttext.util
 #
 from db import db_operations
 def myfunc():
-    ingredients = [{"name": "בצל", "amount": "1"}, {"name": "קישוא", "amount":"3"}, {"name": "מלח", "amount":"חצי כפית"}, {"name": "כורכום", "amount":"רבע כפית"}, {"name": "פלפל שחור", "amount":"קמצוץ"}]
-    directions = ["מחממים מחבת רחבה (רצוי מחבת עם ציפוי שאינו נדבק) עם 2 כפות שמן זית ומטגנים את הבצל עד להזהבה.", "חותכים את הקישואים לקוביות","מוסיפים את הקישואים, ממליחים מעט עם המלחייה ומערבבים. מכסים ומבשלים על אש בינונית-נמוכה במשך 10-12 דקות, עד שהקישואים מתרככים אבל לא לגמרי." , "מרימים את המכסה ומתבלים במלח, כורכום ופלפל שחור. מערבבים ומבשלים על אש בינונית (ללא מכסה) במשך 5 דקות עד שהקישואים מזהיבים (במידה והתערובת מתייבשת במחבת אפשר להוסיף 2-3 כפות מים). טועמים ומתקנים תיבול לפי הצורך."]
-#
-    #db_operations.add_recipe("סלט קישואים מבושל",ingredients , directions, "jpg")
-#
+     ingredients = [{"name": "עלי בייבי", "amount": "1 חבילה"}, {"name": "עגבנית שרי", "amount":"חופן"}, {"name": "אפרסק", "amount":"1"}, {"name": "מוצרלה", "amount":"150 גרם"} , {"name": "חומץ בלסמי", "amount":"4 כפיות"} , {"name": "מלח", "amount":"1 כפית"}]
+     directions = ["בקערה גדולה מערבבים את העלים עם העגבניות ופרוסות האפרסק.", "קורעים את המוצרלה לחתיכות גסות בידיים ומוסיפים לקערה.","מתבלים בשמן הזית, בחומץ הבלסמי ובמלח. מערבבים, טועמים ומוסיפים מלח או חומץ לפי הטעם." ]
+     #db_operations.add_recipe("סלט ירוק עם אפרסקים וגבינה ברוטב בלסמי",ingredients , directions, "jpg")
+     from db import db_init
+     collection = db_init.init_collection('recipes')
+     myquery = { "name":"סלט ירוק עם אפרסקים וגבינה ברוטב בלסמי"}
+     mydoc = collection.find(myquery)
+     for doc in mydoc:
+         id = id = doc["_id"]
+         print(id)
+
+    #ingredients = [{"name": "פסטה", "amount": "1 כוס"}, {"name": "מים", "amount":"1/2 כוס"}, {"name": "חלב", "amount":"2 כפות"}, {"name": "חמאה", "amount":"1 כפית"}, {"name": "גבינה צהובה", "amount":"1/2 כוס"}, {"name": "מלח", "amount":"1/2 כפית"}]
+    #directions = ["מכניסים את הפסטה לכוס או קערית גדולה.", "מוסיפים את המים והמלח ומערבבים","מכניסים למיקרוגל ומחממים בעוצמה הגבוהה במשך 4.5 דקות." , "מוציאים מהמיקרוגל ויוצקים על הפסטה את החלב.", "מניחים על הפסטה את החמאה ואת הגבינות המגורדות ומערבבים", "מכניסים שוב למיקרוגל לחצי דקה נוספת. מוציאים, מערבבים ומגישים."]
+
+    #db_operations.add_recipe("מק אנד צ'יז במיקרו",ingredients , directions, "jpg")
+
 #     ########### test - printing the recipe that we have inserted:
 #
-    from db import db_init
-    collection = db_init.init_collection('recipes')
-#myquery = { "name":"סלט ירקות בסיסי"}
-
-    listofrecipes = collection.find()
-    for doc in listofrecipes:
-        id = doc["_id"]
-        print(doc)
+    #from db import db_init
+    #collection = db_init.init_collection('recipes')
+    #for c in collection:
+    #    print(c)
+    #myquery = { "name":"מק אנד צ'יז במיקרו"}
+    #r = collection.find_One(myquery)
+    #print(r)
 
 ## from http_server.server_init import init_server
 #from http_server import JsonOperations ##import *
