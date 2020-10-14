@@ -94,7 +94,7 @@ def add_recipe(name, ingredients, directions, picture_type):
 
         id = doc["_id"]
     # add picture name filed
-        picture_url = "C:\pictures\\" + str(id) + "." + picture_type
+        picture_url = str(id) + "." + picture_type
         updated = collection.find_one_and_update(
             {"_id" : id},
             {"$set":

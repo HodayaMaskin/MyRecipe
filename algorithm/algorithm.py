@@ -17,7 +17,11 @@ def choose_recipe(ingredients_from_user):
     ## access to recipes list in db
     recipes_list = db_operations.get_recipes_list()
     for recipe in recipes_list:
-        if recipe['name'] == 'סלט ירקות בסיסי':
+        print(recipe)
+        print()
+        print("----------")
+        print()
+        if recipe['name'] == 'אורז ברוטב עגבניות':
             break
         is_match, missed_ingredients = algorithm_helper.ingredients_to_recipe_comparison(recipe, ingredients_from_user,
                                                                                          ingredients_count)
@@ -43,11 +47,15 @@ def choose_recipe(ingredients_from_user):
                         #score = 100
                         #max_score = 0
                         rec_missed_ing = db_operations.get_ing_by_id(i)
+                        ### ingredients list - get ing by id:
+
 
                         rec_vec = rec_missed_ing['vector']
                         max_dist = 0
                         for user_ing_id in ingredients_from_user:
                             user_ing = db_operations.get_ing_by_id(user_ing_id)
+                            ### ingredients list - get ing by id:
+
                             user_vec = user_ing['vector']
                             distance_vec = 1 - spatial.distance.cosine(rec_vec, user_vec)
                             if distance_vec > distance_threshold:
