@@ -17,6 +17,8 @@ def choose_recipe(ingredients_from_user):
     ## access to recipes list in db
     recipes_list = db_operations.get_recipes_list()
     for recipe in recipes_list:
+        replaced = []
+        print(recipe)
         #   break
         is_match, missed_ingredients = algorithm_helper.ingredients_to_recipe_comparison(recipe, ingredients_from_user, ingredients_count)
         score = 100
@@ -47,6 +49,7 @@ def choose_recipe(ingredients_from_user):
                         for user_ing_id in ingredients_from_user:
                             user_ing = db_operations.get_ing_by_id(user_ing_id)
                             user_vec = user_ing['vector']
+                            user_ing_name = user_ing['name']
                             distance_vec = 1 - spatial.distance.cosine(rec_vec, user_vec)
                             if distance_vec > distance_threshold:
                                 if distance_vec  > max_dist:
@@ -55,11 +58,15 @@ def choose_recipe(ingredients_from_user):
                             break # move to next recipe
                         else:
                             score -= (1-max_dist)
+                            replace_ing = db_operations.get_ing_by_id(missed_ing)
+                            my_tuple = (replace_ing['name'], user_ing_name)
+                            replaced.append(my_tuple)
                         i += 1
 
                     if score > score_threshold:
                         score = round(score, 2)
                         recipe["score"] = score
+                        recipe["replaced"] = replaced
                         final_list.append(recipe)
         # for user_ingredient in ingredients_from_user:
         #    if recipe_ingredient._id != user_ingredient._id and recipe_ingredient._id:

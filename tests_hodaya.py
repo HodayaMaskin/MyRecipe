@@ -29,9 +29,9 @@ def get_ing():
 from db import db_operations
 from db import db_init
 def add_rec():
-    name = "סלט קפרזה"
-    ingredients = [{"name":"עגבנית שרי","amount" :"חופן"}, {"name":"מוצרלה","amount" :"200 גרם מדליונים"}, {"name":"בזיליקום","amount" :"כפית"}, {"name":"שומשום","amount" :"2 כפות"}, {"name":"פלפל שחור","amount" :"חצי כפית"},{"name":"מלח","amount" :"חצי כפית"}]
-    directions = ["להרתיח את המים", "להוסיף את האורז עם התבלינים", "לבשל כ20 דק'", "לפזר שומשום מעל ולהגיש"]
+    name = "אפונה"
+    ingredients = [{"name":"אפונה","amount" :"2 כוסות"}, {"name":"מים","amount" :"חצי כוס"}, {"name":"שום","amount" :"2 שיניים"},  {"name":"כורכום","amount" :"רבע כפית"}, {"name":"כמון","amount" :"רבע כפית"},  {"name":"אבקת מרק","amount" :"כפית"}, {"name":"מלח","amount" :"כפית"}, {"name":"פלפל שחור","amount" :"קמצוץ"}]
+    directions = ["מחממים מחבת רחבה עם כף שמן ומוסיפים את השום והאפונה (אין צורך להפשיר לפני). מערבבים במשך כ-2 דקות.", "מוסיפים חצי כוס מים ומתבלים באבקת מרק, מלח, כורכום, כמון ופלפל שחור. מבשלים עם מכסה על אש בינונית במשך 8-10 דקות, עד שהרוטב מצטמצם." ]
     db_operations.add_recipe(name,ingredients , directions, "jpg")
 #
 # #     ########### test - printing the recipe that we have inserted:
