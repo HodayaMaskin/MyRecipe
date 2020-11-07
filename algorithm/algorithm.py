@@ -44,12 +44,19 @@ def choose_recipe(ingredients_from_user):
                         #score = 100
                         #max_score = 0
                         rec_missed_ing = db_operations.get_ing_by_id(i)
+                        #####
+                        if rec_missed_ing['name'] == 'אורז לבן':
+                            rec_missed_ing = db_operations.get_ing_by_name('אורז')
                         rec_vec = rec_missed_ing['vector']
                         max_dist = 0
                         for user_ing_id in ingredients_from_user:
                             user_ing = db_operations.get_ing_by_id(user_ing_id)
+                            ####
+                            if user_ing['name'] == 'אורז לבן':
+                                user_ing = db_operations.get_ing_by_name('אורז')
                             user_vec = user_ing['vector']
                             user_ing_name = user_ing['name']
+                            #
                             distance_vec = 1 - spatial.distance.cosine(rec_vec, user_vec)
                             if distance_vec > distance_threshold:
                                 if distance_vec  > max_dist:
@@ -59,7 +66,7 @@ def choose_recipe(ingredients_from_user):
                         else:
                             score -= (1-max_dist)
                             replace_ing = db_operations.get_ing_by_id(missed_ing)
-                            my_tuple = (replace_ing['name'], user_ing_name)
+                            my_tuple = (rec_missed_ing['name'], user_ing_name)
                             replaced.append(my_tuple)
                         i += 1
 

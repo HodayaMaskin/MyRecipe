@@ -114,3 +114,8 @@ def add_recipe(name, ingredients, directions, picture_type):
 def get_ing_by_id(id):
     ingredients_collection = init_collection("ingredients")
     return ingredients_collection.find_one({"_id" : id})
+
+
+def get_ing_by_name(name):
+    ingredients_collection = init_collection("ingredients")
+    return ingredients_collection.find_one({"name" : name})

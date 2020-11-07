@@ -279,3 +279,12 @@ for i in ingredients:
 # collection = db_init.init_collection('ingredients')
 # f = collection.find_one({"name":"בצל סגול"})
 # print(f)
+
+from db import db_operations
+
+def verify_all_recipe_ings_and_add_if_needed():
+    recipes_collection = db_operations.init_collection("recipes")
+    #ings = db_operations.init_collection("ingredients")
+    recipes = recipe_collection.find()
+    for r in recipes:
+        db_operations.add_ingredients_from_recipe(r)
